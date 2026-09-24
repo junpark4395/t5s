@@ -11,28 +11,36 @@ import (
 // List is a set of allowed address ranges. The zero value allows nothing.
 type List struct {
 	prefixes []netip.Prefix
+	all      bool
 }
 
 // Parse builds a List from IP addresses and CIDR ranges.
-// It returns an error for an empty list, an unparsable entry,
-// or a range that allows every address.
+// The unspecified address (0.0.0.0, ::) or a range with a zero-length prefix allows every address.
+// It returns an error for an empty list or an unparsable entry.
 func Parse(entries []string) (List, error) {
 	if len(entries) == 0 {
 		return List{}, errors.New("allowlist is empty")
 	}
-	prefixes := make([]netip.Prefix, 0, len(entries))
+	var list List
 	for _, entry := range entries {
 		prefix, err := parsePrefix(strings.TrimSpace(entry))
 		if err != nil {
 			return List{}, err
 		}
-		prefixes = append(prefixes, prefix)
+		if prefix.Bits() == 0 {
+			list.all = true
+			continue
+		}
+		list.prefixes = append(list.prefixes, prefix)
 	}
-	return List{prefixes: prefixes}, nil
+	return list, nil
 }
 
-// Allows reports whether addr is inside one of the ranges.
+// Allows reports whether addr is inside one of the ranges or the list allows every address.
 func (l List) Allows(addr netip.Addr) bool {
+	if l.all {
+		return true
+	}
 	addr = addr.Unmap().WithZone("")
 	for _, prefix := range l.prefixes {
 		if prefix.Contains(addr) {
@@ -49,14 +57,14 @@ func parsePrefix(entry string) (netip.Prefix, error) {
 			return netip.Prefix{}, fmt.Errorf("parse allowlist entry %q: %w", entry, err)
 		}
 		addr = addr.Unmap().WithZone("")
+		if addr.IsUnspecified() {
+			return netip.PrefixFrom(addr, 0), nil
+		}
 		return netip.PrefixFrom(addr, addr.BitLen()), nil
 	}
 	prefix, err := netip.ParsePrefix(entry)
 	if err != nil {
 		return netip.Prefix{}, fmt.Errorf("parse allowlist entry %q: %w", entry, err)
-	}
-	if prefix.Bits() == 0 {
-		return netip.Prefix{}, fmt.Errorf("allowlist entry %q allows every address", entry)
 	}
 	return prefix.Masked(), nil
 }

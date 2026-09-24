@@ -78,12 +78,12 @@ func TestModel_OwnAddress(t *testing.T) {
 			t.Errorf("View().Cursor = %+v, want it on the allow line %d", got.Cursor, allow)
 		}
 
-		m = typeText(t, m, "0.0.0.0/0")
+		m = typeText(t, m, "10.0.0.0/33")
 		m, _ = update(t, m, pressKey(tea.KeyEnter))
-		expectText(t, m, []string{"allows every address", "Your own address is always allowed."}, nil)
+		expectText(t, m, []string{`parse allowlist entry "10.0.0.0/33"`, "Your own address is always allowed."}, nil)
 
 		m = typeText(t, m, "1")
-		expectText(t, m, []string{"Your own address is always allowed."}, []string{"allows every address"})
+		expectText(t, m, []string{"Your own address is always allowed."}, []string{"parse allowlist entry"})
 	})
 
 	t.Run("dialog asks for an address while the own one is unknown", func(t *testing.T) {

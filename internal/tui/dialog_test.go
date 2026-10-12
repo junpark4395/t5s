@@ -54,7 +54,7 @@ func TestShareDialog(t *testing.T) {
 
 	t.Run("enter with a bad list keeps the dialog open and shows why", func(t *testing.T) {
 		d, _ := newShareDialog(target, "", allowWidth, nil)
-		d = typeInto(d, "0.0.0.0/0")
+		d = typeInto(d, "10.0.0.0/33")
 		d, _, outcome := d.update(pressKey(tea.KeyEnter), keys)
 		if outcome != dialogOpen || d.err == nil {
 			t.Errorf("outcome = %d, err = %v, want open with an error", outcome, d.err)

@@ -20,8 +20,8 @@ func TestParse(t *testing.T) {
 		{"blank entry", []string{""}, `parse allowlist entry ""`},
 		{"not an address", []string{"example.com"}, `parse allowlist entry "example.com"`},
 		{"bad prefix length", []string{"10.0.0.0/33"}, `parse allowlist entry "10.0.0.0/33"`},
-		{"ipv4 range that allows everyone", []string{"0.0.0.0/0"}, `"0.0.0.0/0" allows every address`},
-		{"ipv6 range that allows everyone", []string{"::/0"}, `"::/0" allows every address`},
+		{"ipv4 range that allows everyone", []string{"0.0.0.0/0"}, ""},
+		{"ipv6 range that allows everyone", []string{"::/0"}, ""},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -71,4 +71,26 @@ func TestList_Allows(t *testing.T) {
 			t.Errorf("zero List allows 127.0.0.1, want it to allow nothing")
 		}
 	})
+
+	everyone := []struct {
+		name  string
+		entry string
+	}{
+		{"unspecified ipv4 address allows every address", "0.0.0.0"},
+		{"ipv4 range with zero bits allows every address", "0.0.0.0/0"},
+		{"ipv6 range with zero bits allows every address", "::/0"},
+	}
+	for _, tt := range everyone {
+		t.Run(tt.name, func(t *testing.T) {
+			list, err := Parse([]string{tt.entry})
+			if err != nil {
+				t.Fatalf("Parse(%q) error = %v", tt.entry, err)
+			}
+			for _, addr := range []string{"203.0.113.42", "2001:db8::1a2b"} {
+				if !list.Allows(netip.MustParseAddr(addr)) {
+					t.Errorf("Parse(%q).Allows(%s) = false, want true", tt.entry, addr)
+				}
+			}
+		})
+	}
 }

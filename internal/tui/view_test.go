@@ -213,16 +213,16 @@ func TestModel_View(t *testing.T) {
 		m := scanned(t, &fakeDeps{}, three...)
 		m, _ = update(t, m, press('j'))
 		m, _ = update(t, m, press('s'))
-		m = typeText(t, m, "0.0.0.0/0")
+		m = typeText(t, m, "10.0.0.0/33")
 		m, _ = update(t, m, pressKey(tea.KeyEnter))
 
 		expectText(t, m,
-			[]string{"╭─ Share front (localhost:5173) ─", "Allow   0.0.0.0/0", "Expire", "‹1h›", "allows every address"},
+			[]string{"╭─ Share front (localhost:5173) ─", "Allow   10.0.0.0/33", "Expire", "‹1h›", `parse allowlist entry "10.0.0.0/33"`},
 			[]string{"enter share · tab switch"})
 		expectKeys(t, m, []string{"enter share", "tab switch", "esc cancel"}, []string{"q quit", "s share"})
 		got := m.View()
-		allowLine := lineContaining(t, plainLines(got), "Allow   0.0.0.0/0")
-		wantX := lipgloss.Width("│ Allow   0.0.0.0/0")
+		allowLine := lineContaining(t, plainLines(got), "Allow   10.0.0.0/33")
+		wantX := lipgloss.Width("│ Allow   10.0.0.0/33")
 		if got.Cursor == nil || got.Cursor.Y != allowLine || got.Cursor.X != wantX {
 			t.Errorf("View().Cursor = %+v, want line %d column %d (end of the typed text)", got.Cursor, allowLine, wantX)
 		}

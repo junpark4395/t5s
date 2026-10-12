@@ -10,8 +10,8 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 
-	"github.com/sakusi4/t5s/internal/discovery"
-	"github.com/sakusi4/t5s/internal/proxy"
+	"github.com/junpark4395/t5s/internal/discovery"
+	"github.com/junpark4395/t5s/internal/proxy"
 )
 
 func accesses(n int) []proxy.Access {

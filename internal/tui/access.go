@@ -8,7 +8,7 @@ import (
 	"charm.land/bubbles/v2/key"
 	tea "charm.land/bubbletea/v2"
 
-	"github.com/sakusi4/t5s/internal/proxy"
+	"github.com/junpark4395/t5s/internal/proxy"
 )
 
 type accessView struct {

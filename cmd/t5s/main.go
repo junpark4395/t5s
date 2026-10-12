@@ -10,11 +10,11 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"github.com/atotto/clipboard"
 
-	"github.com/sakusi4/t5s/internal/cloudflared"
-	"github.com/sakusi4/t5s/internal/discovery"
-	"github.com/sakusi4/t5s/internal/publicip"
-	"github.com/sakusi4/t5s/internal/share"
-	"github.com/sakusi4/t5s/internal/tui"
+	"github.com/junpark4395/t5s/internal/cloudflared"
+	"github.com/junpark4395/t5s/internal/discovery"
+	"github.com/junpark4395/t5s/internal/publicip"
+	"github.com/junpark4395/t5s/internal/share"
+	"github.com/junpark4395/t5s/internal/tui"
 )
 
 func main() {

@@ -1,6 +1,6 @@
 # t5s
 
-[![CI](https://github.com/sakusi4/t5s/actions/workflows/ci.yml/badge.svg)](https://github.com/sakusi4/t5s/actions/workflows/ci.yml)
+[![CI](https://github.com/junpark4395/t5s/actions/workflows/ci.yml/badge.svg)](https://github.com/junpark4395/t5s/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 Share localhost with only the people you allow.
@@ -16,12 +16,12 @@ Sharing `dashboard` with one address, then watching who reaches it:
 ## Install
 
 ```sh
-brew install -y sakusi4/tap/t5s
+brew install -y junpark4395/tap/t5s
 ```
 
 This also installs [cloudflared](https://github.com/cloudflare/cloudflared), which t5s runs as a subprocess; `-y` accepts that dependency without a prompt. No Cloudflare account is needed.
 
-t5s is developed and tested on macOS. The [releases page](https://github.com/sakusi4/t5s/releases) also carries Linux and Windows builds, but they are untested.
+t5s is developed and tested on macOS. The [releases page](https://github.com/junpark4395/t5s/releases) also carries Linux and Windows builds, but they are untested.
 
 ## Usage
 
@@ -76,7 +76,7 @@ You should see `dashboard` (nginx), `api` and `mail` (Docker). Redis and the SMT
 Build from source with Go 1.27 or later:
 
 ```sh
-git clone https://github.com/sakusi4/t5s.git
+git clone https://github.com/junpark4395/t5s.git
 cd t5s
 go build ./cmd/t5s
 ./t5s

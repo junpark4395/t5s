@@ -1,4 +1,4 @@
-module github.com/sakusi4/t5s
+module github.com/junpark4395/t5s
 
 go 1.27.1
 

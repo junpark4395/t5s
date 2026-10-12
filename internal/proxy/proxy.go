@@ -13,7 +13,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/sakusi4/t5s/internal/acl"
+	"github.com/junpark4395/t5s/internal/acl"
 )
 
 const (

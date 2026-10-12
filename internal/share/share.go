@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/sakusi4/t5s/internal/acl"
-	"github.com/sakusi4/t5s/internal/proxy"
+	"github.com/junpark4395/t5s/internal/acl"
+	"github.com/junpark4395/t5s/internal/proxy"
 )
 
 // ErrExpired is returned by [Share.Wait] when the share ended because its time ran out.

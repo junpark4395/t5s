@@ -11,9 +11,9 @@ import (
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
 
-	"github.com/sakusi4/t5s/internal/acl"
-	"github.com/sakusi4/t5s/internal/discovery"
-	"github.com/sakusi4/t5s/internal/share"
+	"github.com/junpark4395/t5s/internal/acl"
+	"github.com/junpark4395/t5s/internal/discovery"
+	"github.com/junpark4395/t5s/internal/share"
 )
 
 const (
